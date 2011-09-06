@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block body %}
+
+  <div style="float:left;">
+  <h2>Characters</h2>
+
+  <ul>
+  {% for id, name in characters.items() %}
+    <li style="list-style-type: none;"><table><tr><td><a href="{{ url_for('character', character_id=id) }}"><img border="2" src="http://image.eveonline.com/Character/{{ id }}_128.jpg" alt='{{ name }}'/></a></td><td valign="top" width="150px"><b>{{ name }}</b><br/>{{ charinfo[id]['sp_total']|humanize }} SP<br/>{{ charinfo[id]['balance']|humanize }} ISK<br/>{{ charinfo[id]['corporation'] }}{% if charinfo[id]['alliance'] %}<br/>{{ charinfo[id]['alliance'] }}{% endif %}</td></tr></table></li>
+  {% endfor %}
+  </ul>
+  {% if status %}
+  <h2>Account Status</h2>
+  <p><b>Paid Until</b> {{ status.paidUntil|unixdate }}<br/>
+  <b>Created Date</b> {{ status.createDate|unixdate }}<br/>
+  {% endif %}
+  </div>
+  <div style="float: right;">
+  <h2>Access Permissions</h2>
+  <br/>
+  <table>
+  {% for name, c in access %}
+  <tr><td>{{ name }}</td><td><img width="16" src="{% if c %}{{ url_for('static', filename='icons/cross.png') }}{% else %}{{ url_for('static', filename='icons/tick.png') }}{% endif %}"/></td>
+  {% endfor %}
+  </table>
+  </div>
+
+{% endblock %}
+

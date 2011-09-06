@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Key Input</h2>
+  <form action="{{ url_for('index') }}" method=post>
+    <dl>
+      <dt>Key ID:
+      <dd><input type='text' name='keyid'>
+      <dt>Verification Code:
+      <dd><input type='text' name='vcode'>
+      <dd><input type='submit' value='Scrape'>
+    </dl>
+  </form>
+
+{% endblock %}
+
