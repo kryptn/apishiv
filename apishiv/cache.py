@@ -55,7 +55,7 @@ class DbCacheHandler:
         docid = self._gen_docid(host, path, params)
         self.log.debug("Retrieving document: %s" % docid)
         try:
-            self.cursor.execute("SELECT xml FROM api_cache WHERE docid = ? and datetime(cacheduntil, 'utc') >= current_timestamp", (docid,))
+            self.cursor.execute("SELECT xml FROM api_cache WHERE docid = ? and datetime(cacheduntil, 'unixepoch') >= current_timestamp", (docid,))
             res = self.cursor.fetchone()
             self.disconnect()
         except sqlite3.Error as e:
