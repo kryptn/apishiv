@@ -75,3 +75,12 @@ class DbCacheHandler:
             self.disconnect()
         except sqlite3.Error as e:
             self.log.error("Error storing document: %s", e.args[0])
+
+    def purge_stale(self):
+        self.log.info("Purging stale cached documents")
+        try:
+            self.cursor.execute("DELETE FROM api_cache WHERE datetime(cacheduntil, 'unixepoch') >= current_timestamp")
+            self.conn.commit()
+            self.disconnect()
+        except sqlite3.Error as e:
+            self.log.error("Error purging document cache: %s", e.args[0])
