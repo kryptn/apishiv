@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+
+{% for contact in contactlist %}<div>
+{% if contact.contactInfo %}
+<img src="https://image.eveonline.com/Character/{{contact.contactID}}_64.jpg" style="float:left" /><span style="float:right">{{contact.contactName}}<br>{{contact.contactInfo.corporation}}<br>{{contact.contactInfo.alliance}}</span>
+{% else %}
+<img src="https://image.eveonline.com/Character/{{contact.contactID}}_64.jpg" style="float:left" /><span style="float:right">{{contact.contactName}}<br>{{contact.inWatchlist, contact.standing}}<br></span>
+{% endif %}
+</div><br>
+{% endfor %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(function(){
+		$(".skill_heading")
+                    .css("cursor", "pointer")
+                    .attr("title", "Click to expand/collapse")
+                    .click(function(){
+                        $('tr[parent$=' + $(this).attr('id') + ']').toggle();
+    		    });
+		
+		$("#openAll").bind("click", function(e){
+			e.preventDefault();
+                        $(".child").show();
+		});
+		
+		$("#collapseAll").bind("click", function(e){
+			e.preventDefault();
+			$(".child").hide();
+		});
+
+                $('tr[parent]').hide();
+	});
+</script>
+
+{% endblock %}

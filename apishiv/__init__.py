@@ -129,6 +129,29 @@ def character(character_id):
         return render_template('character.html', character=charsheet, corp=corp, skilllist=skilllist, charinfo=charinfo)
     return redirect(url_for('characters'))
 
+@app.route('/contacts/<character_id>')
+def contact(character_id):
+    if mask_check(session['accessmask'], 4):
+        auth = auth_from_session(session)
+        contactlist = auth.char.ContactList(characterID=character_id)
+        contacts = []
+        for row in contactlist.contactList:
+            temp = {}
+            try:
+                temp['contactInfo'] = eveapi.eve.CharacterInfo(characterID=row.contactID)
+            except:
+                temp['contactInfo'] = False
+            temp['contactID'] = row.contactID
+            temp['contactName'] = row.contactName
+            temp['inWatchlist'] = row.inWatchlist
+            temp['standing'] = row.standing
+            contacts.append(temp)
+        return render_template('contacts.html', contactlist=contacts)
+    return redirect(url_for('characters'))
+
+
+
+
 @app.route('/clear')
 def clear():
     session.clear()
