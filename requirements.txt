@@ -1,2 +1,3 @@
-flask
--e git+https://github.com/nikdoof/eveapi.git#egg=eveapi
+Flask==0.7.2
+-e git+https://github.com/nikdoof/eveapi.git@55e614528a41a6e05cf316238efd1ea0b1c34028#egg=eveapi-dev
+gunicorn==0.14.3
